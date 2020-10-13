@@ -85,19 +85,11 @@ public class BezierCurve : MonoBehaviour
         return rotation;
     }
     #if UNITY_EDITOR
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         if (AreReferencesFilled)
         {
             Handles.DrawBezier(startingPoint.position, endingPoint.position, startingTangent.position, endingTangent.position, Color.cyan, null, 2);
-    
-            float ratio = Mathf.Sin(Time.realtimeSinceStartup) * 0.5f + 0.5f;
-            Vector3 positionOnTheCurve = GetPosition(ratio);
-            Vector3 orientationOnTheCurve = GetVelocity(ratio).normalized;
-    
-            Handles.DrawLine(positionOnTheCurve, positionOnTheCurve + orientationOnTheCurve);
-    
-            //Handles.CubeHandleCap(0, positionOnTheCurve, Quaternion.identity, 5, EventType.Repaint);
         }
     }   
     #endif

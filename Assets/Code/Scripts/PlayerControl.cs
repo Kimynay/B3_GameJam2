@@ -22,6 +22,7 @@ public class PlayerControl : MonoBehaviour
     private bool mHaveSeenPumpkin;
     private Pumpkin mLastPumpkinSeen;
     private bool mLastPumpkinReset;
+    public bool mHaveBeenSeen = false;
 
     void Start()
     {
@@ -30,6 +31,10 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        if(mHaveBeenSeen)
+        {
+            Debug.Log("GAME OVER !");
+        }
         Move();
         Crouch();
         InteractWithPumpkin();
