@@ -3,14 +3,22 @@
 public class PlayerControl : MonoBehaviour
 {
     public Camera mCamera;
-    public float mSpeed = 2;
+    public float mNormalSpeed = 4;
     public float mHorizontalRotationSpeed = 1.5f;
     public float mVerticalRotationSpeed = 1.5f;
     public float mMaxVerticalRotation = 60;
+    public float mCrouchMovementHeight = 0.8f;
+    public float mCrouchYSpeed = 1.0f;
+    public float mRatioCrounchMovementSpeed = 0.5f;
+
+    public bool mIsCrouch = false;
 
     private Vector3 mMovementRight;
     private Vector3 mMovementForward;
     private Vector3 mMovement;
+    private bool mIsUp = true;
+    private float mSpeed = 0;
+
     void Start()
     {
         
@@ -18,6 +26,14 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        if(mIsCrouch)
+        {
+            mSpeed = mNormalSpeed * mRatioCrounchMovementSpeed;
+        }
+        else
+        {
+            mSpeed = mNormalSpeed;
+        }
         if(Input.GetAxis("Horizontal") != 0)
         {
             mMovementRight = Input.GetAxis("Horizontal") * mCamera.transform.right;
@@ -48,6 +64,33 @@ public class PlayerControl : MonoBehaviour
         else if (mCamera.transform.localEulerAngles.x > mMaxVerticalRotation && mCamera.transform.localEulerAngles.x < 180)
         {
             mCamera.transform.localEulerAngles = new Vector3 (mMaxVerticalRotation, 0.0f, 0.0f);
+        }
+
+        if(Input.GetButton("Crouch"))
+        {
+            if(!mIsCrouch)
+            {
+                mIsUp = false;
+                mCamera.transform.localPosition += Vector3.down * Time.deltaTime * mCrouchYSpeed;
+                if (mCamera.transform.localPosition.y <= -mCrouchMovementHeight)
+                {
+                    mCamera.transform.localPosition = new Vector3(0.0f, -mCrouchMovementHeight, 0.0f);
+                    mIsCrouch = true;
+                }
+            }
+        }
+        else
+        {
+            if (!mIsUp)
+            {
+                mIsCrouch = false;
+                mCamera.transform.localPosition += Vector3.up * Time.deltaTime * mCrouchYSpeed;
+                if (mCamera.transform.localPosition.y >= 0.0f)
+                {
+                    mCamera.transform.localPosition = Vector3.zero;
+                    mIsUp = true;
+                }
+            }
         }
     }
 }
