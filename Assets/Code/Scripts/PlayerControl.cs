@@ -2,6 +2,8 @@
 
 public class PlayerControl : MonoBehaviour
 {
+    public static PlayerControl sPlayer;
+
     public Camera mCamera;
     public float mNormalSpeed = 4;
     public float mHorizontalRotationSpeed = 1.5f;
@@ -29,20 +31,29 @@ public class PlayerControl : MonoBehaviour
     public bool mIsHide = false;
     public bool mHaveBeenSeen = false;
     public bool mHasBeenArrested = false;
-    void Start()
+
+
+    void OnEnable()
     {
-        
+        MenuManager.sMenuManager.mLoadingScreen.SetActive(false);
+        if (sPlayer == null)
+        {
+            sPlayer = this;
+        }
     }
 
     void Update()
     {
-        if(mHaveBeenSeen)
+        if(!mHasBeenArrested)
+        {
+            Move();
+            Crouch();
+            InteractWithPumpkin();
+        }
+        else
         {
             Debug.Log("GAME OVER !");
         }
-        Move();
-        Crouch();
-        InteractWithPumpkin();
 
     }
 

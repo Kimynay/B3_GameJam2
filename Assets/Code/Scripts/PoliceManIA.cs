@@ -8,10 +8,16 @@ public class PoliceManIA : MonoBehaviour
     private Vector3[] mPatrolPointsPos;
 
     public float mPoliceManSpeed = 3.0f;
+    public float mPoliceManRunSpeed = 5.0f;
     public float mStayTimeduration = 4.0f;
+    public float mDistanceToArrestThePlayer = 0.8f;
+
+    public bool mHaveDetectedThePlayer = false;
 
     private int mIndex = 0;
     private bool mIsWaiting;
+    private float mDistanceToStopAtPoint = 0.02f;
+    private bool mGameFinished = false;
     void Start()
     {
         mPatrolPointsPos = new Vector3[mPatrolPoints.Length];
@@ -23,15 +29,26 @@ public class PoliceManIA : MonoBehaviour
 
     void Update()
     {
-        if(!mIsWaiting)
-            GoToNextPoint(mIndex);
+        if(!mGameFinished)
+        {
+            if (!mHaveDetectedThePlayer)
+            {
+                if (!mIsWaiting)
+                    GoToNextPoint(mIndex);
+            }
+            else
+            {
+                GoToPlayer();
+            }
+        }
+
     }
     void GoToNextPoint(int index)
     {
         Vector3 direction = mPatrolPointsPos[index] - transform.position;
         transform.rotation = Quaternion.LookRotation(direction.normalized);
         transform.position += direction.normalized * Time.deltaTime * mPoliceManSpeed;
-        if (direction.magnitude < 0.02f)
+        if (direction.magnitude < mDistanceToStopAtPoint)
         {
             transform.position = mPatrolPointsPos[index];
             transform.rotation = Quaternion.LookRotation(mPatrolPoints[index].forward);
@@ -43,6 +60,7 @@ public class PoliceManIA : MonoBehaviour
     {
         StartCoroutine(WaitThereXSecond(mStayTimeduration));
     }
+
     IEnumerator WaitThereXSecond(float secondToWait)
     {
         yield return new WaitForSeconds(secondToWait);
@@ -50,5 +68,15 @@ public class PoliceManIA : MonoBehaviour
         if (mIndex > mPatrolPoints.Length - 1)
             mIndex = 0;
         mIsWaiting = false;
+    }
+    void GoToPlayer()
+    {
+        Vector3 direction = PlayerControl.sPlayer.transform.position - transform.position;
+        transform.position += direction.normalized * Time.deltaTime * mPoliceManRunSpeed;
+        if(direction.magnitude < mDistanceToArrestThePlayer)
+        {
+            PlayerControl.sPlayer.mHasBeenArrested = true;
+            mGameFinished = true;
+        }
     }
 }

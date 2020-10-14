@@ -57,6 +57,11 @@ MonoBehaviour:
   mOnCurveRatioSpeed: 0.2
   mBezierCurves:
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   mGiroPhares:
   - {fileID: 8629501178740995212}
   - {fileID: 8629501177800653957}
@@ -71,7 +76,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8629501177621573663}
-  - component: {fileID: 8629501177621573649}
   - component: {fileID: 8629501177621573662}
   - component: {fileID: 8629501177621573648}
   m_Layer: 9
@@ -95,14 +99,6 @@ Transform:
   m_Father: {fileID: 8629501177578768187}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: -20}
---- !u!33 &8629501177621573649
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8629501177621573660}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!136 &8629501177621573662
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -129,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0f3de30ae7fa04fa7a5aa5f69656bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mThisPoliceCar: {fileID: 8629501177578768186}
+  mThisPoliceIA: {fileID: 8629501177578768184}
 --- !u!1 &8629501177800653957
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,7 +412,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8629501178347267672}
-  - component: {fileID: 8629501178347267674}
   - component: {fileID: 8629501178347267675}
   - component: {fileID: 8629501178347267677}
   m_Layer: 9
@@ -440,14 +435,6 @@ Transform:
   m_Father: {fileID: 8629501177578768187}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 20}
---- !u!33 &8629501178347267674
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8629501178347267673}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!136 &8629501178347267675
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -474,7 +461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0f3de30ae7fa04fa7a5aa5f69656bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mThisPoliceCar: {fileID: 8629501177578768186}
+  mThisPoliceIA: {fileID: 8629501177578768184}
 --- !u!1 &8629501178652947737
 GameObject:
   m_ObjectHideFlags: 0
