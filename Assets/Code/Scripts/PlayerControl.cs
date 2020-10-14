@@ -7,10 +7,11 @@ public class PlayerControl : MonoBehaviour
     public float mHorizontalRotationSpeed = 1.5f;
     public float mVerticalRotationSpeed = 1.5f;
     public float mMaxVerticalRotation = 60;
-    public float mCrouchMovementHeight = 0.8f;
+    public float mCrouchHeight = 0.9f;
     public float mCrouchYSpeed = 1.0f;
     public float mRatioCrounchMovementSpeed = 0.5f;
     public LayerMask mPumpkinMask;
+    public float mCameraBaseHeight = 1.6f;
 
     public bool mIsCrouch = false;
 
@@ -22,8 +23,12 @@ public class PlayerControl : MonoBehaviour
     private bool mHaveSeenPumpkin;
     private Pumpkin mLastPumpkinSeen;
     private bool mLastPumpkinReset;
-    public bool mHaveBeenSeen = false;
 
+    public bool mHaveDetectedThePlayer = false;
+
+    public bool mIsHide = false;
+    public bool mHaveBeenSeen = false;
+    public bool mHasBeenArrested = false;
     void Start()
     {
         
@@ -92,9 +97,9 @@ public class PlayerControl : MonoBehaviour
             {
                 mIsUp = false;
                 mCamera.transform.localPosition += Vector3.down * Time.deltaTime * mCrouchYSpeed;
-                if (mCamera.transform.localPosition.y <= -mCrouchMovementHeight)
+                if (mCamera.transform.localPosition.y <= mCameraBaseHeight - mCrouchHeight)
                 {
-                    mCamera.transform.localPosition = new Vector3(0.0f, -mCrouchMovementHeight, 0.0f);
+                    mCamera.transform.localPosition = new Vector3(0.0f, mCameraBaseHeight - mCrouchHeight, 0.0f);
                     mIsCrouch = true;
                 }
             }
@@ -105,9 +110,9 @@ public class PlayerControl : MonoBehaviour
             {
                 mIsCrouch = false;
                 mCamera.transform.localPosition += Vector3.up * Time.deltaTime * mCrouchYSpeed;
-                if (mCamera.transform.localPosition.y >= 0.0f)
+                if (mCamera.transform.localPosition.y >= mCameraBaseHeight)
                 {
-                    mCamera.transform.localPosition = Vector3.zero;
+                    mCamera.transform.localPosition = new Vector3(0.0f, mCameraBaseHeight, 0.0f);
                     mIsUp = true;
                 }
             }

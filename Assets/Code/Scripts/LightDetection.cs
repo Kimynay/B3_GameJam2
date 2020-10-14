@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LightDetection : MonoBehaviour
 {
-    public PoliceCarIA mThisPoliceCar;
+    public GameObject mThisPoliceCar;
     void Start()
     {
         
@@ -19,7 +19,11 @@ public class LightDetection : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             other.GetComponent<PlayerControl>().mHaveBeenSeen = true;
-            mThisPoliceCar.mHaveDetectedThePlayer = true;
+            if(mThisPoliceCar.GetComponent<PoliceCarIA>() != null)
+            {
+                mThisPoliceCar.GetComponent<PoliceCarIA>().mHaveDetectedThePlayer = true;
+            }
+            
         }
     }
 }
