@@ -63,6 +63,8 @@ MonoBehaviour:
   mIsHide: 0
   mHaveBeenSeen: 0
   mHasBeenArrested: 0
+  mThisLevelFinishSetup: 0
+  mEndFailMenuSet: 0
 --- !u!136 &2843114483544515566
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -158,7 +160,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 2
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
