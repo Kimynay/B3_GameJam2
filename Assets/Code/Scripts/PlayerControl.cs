@@ -29,6 +29,7 @@ public class PlayerControl : MonoBehaviour
     private bool mLastPumpkinReset;
     private List<GameObject> mBushList;
     private Rigidbody mRigidbody;
+    private Animator mAnimator;
 
     public bool mHaveDetectedThePlayer = false;
 
@@ -43,7 +44,7 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
-
+        mAnimator = GetComponent<Animator>();
         mBushList = new List<GameObject>();
         if (sPlayer == null)
         {
@@ -81,7 +82,6 @@ public class PlayerControl : MonoBehaviour
                 {
                     mEndFailMenuSet = true;
                     MenuManager.sMenuManager.EndFail();
-                    //Debug.Log("GAME OVER !");
                 }
             }
             if (mBushList.Count > 0 && mIsCrouch)
@@ -117,6 +117,11 @@ public class PlayerControl : MonoBehaviour
         {
             mMovement = mMovementRight + mMovementForward;
             transform.position += mMovement * Time.deltaTime * mSpeed;
+            mAnimator.SetBool("walk", true);
+        }
+        else
+        {
+            mAnimator.SetBool("walk", false);
         }
     
         if (Input.GetAxis("RotationH") != 0)
