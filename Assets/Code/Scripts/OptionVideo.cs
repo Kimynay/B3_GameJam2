@@ -8,7 +8,7 @@ public class OptionVideo : MonoBehaviour
     public Material mPostProcessMaterial;
     private Slider mBrightness;
 
-    private void OnEnable()
+    private void Start()
     {
         mBrightness = MenuManager.sMenuManager.mBrightnessSlider;
     }

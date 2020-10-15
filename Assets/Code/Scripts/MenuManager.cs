@@ -10,11 +10,11 @@ public class MenuManager : MonoBehaviour
     public static MenuManager sMenuManager;
     public GameObject mLoadingScreen;
 
-    public GameObject mMenuCamera;
     public GameObject mMainMenu;
     public GameObject mPauseMenu;
     public GameObject mEndFailMenu;
     public GameObject mEndWinMenu;
+    public GameObject mLoadGameMenu;
     public GameObject mMainMenuFirstSelected;
     public GameObject mLoadGameMenuFirstSelected;
     public GameObject mSaveGameMenuFirstSelected;
@@ -32,6 +32,9 @@ public class MenuManager : MonoBehaviour
     public static bool sInMainMenu = true;
     public bool mEndFail = false;
     public bool mEndWin = false;
+
+    public int mCurrentLevel;
+    public Transform[] mStartLevelTransform;
 
     private void OnEnable()
     {
@@ -74,7 +77,7 @@ public class MenuManager : MonoBehaviour
             EndWin();
         }
         AudioListener.volume = mVolumeSlider.value;
-        
+
     }
     public void GoBackToLastMenu()
     {
@@ -114,13 +117,50 @@ public class MenuManager : MonoBehaviour
     {
         ChangeFirstButton(mSaveGameMenuFirstSelected);
     }
+    public void Save()
+    {
+        SaveSystem.SavePlayer(PlayerControl.sPlayer);
+    }
+    public void Load()
+    {
+        PlayerData data = SaveSystem.LoadPlayer();
+
+        if (mCurrentLevel != 0 && SceneManager.GetSceneByBuildIndex(mCurrentLevel).isLoaded)
+            SceneManager.UnloadSceneAsync(mCurrentLevel);
+
+        mLoadGameMenu.SetActive(false);
+        sInMainMenu = false;
+
+
+        StartCoroutine(LoadScene(data));
+
+
+
+    }
     public void PlayGame()
     {
         if (!SceneManager.GetSceneByBuildIndex(1).isLoaded)
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Additive);
-        mMenuCamera.SetActive(false);
+        PlayerControl.sPlayer.mThisLevelFinishSetup = false;
+        mCurrentLevel = 1;
+        mLoadingScreen.SetActive(false);
         sInMainMenu = false;
         Time.timeScale = 1.0f;
+        PlayerControl.sPlayer.transform.position = mStartLevelTransform[mCurrentLevel - 1].position;
+        PlayerControl.sPlayer.transform.rotation = mStartLevelTransform[mCurrentLevel - 1].rotation;
+    }
+    public void LoadNextLevel()
+    {
+        if (mCurrentLevel != 0 && SceneManager.GetSceneByBuildIndex(mCurrentLevel).isLoaded)
+            SceneManager.UnloadSceneAsync(mCurrentLevel);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Additive);
+        PlayerControl.sPlayer.mThisLevelFinishSetup = false;
+        mLoadingScreen.SetActive(false);
+        sInMainMenu = false;
+        Time.timeScale = 1.0f;
+        mCurrentLevel += 1;
+        PlayerControl.sPlayer.transform.position = mStartLevelTransform[mCurrentLevel - 1].position;
+        PlayerControl.sPlayer.transform.rotation = mStartLevelTransform[mCurrentLevel - 1].rotation;
     }
 
     public void Resume()
@@ -132,7 +172,6 @@ public class MenuManager : MonoBehaviour
     {
         sIsPaused = false;
         sInMainMenu = true;
-        mMenuCamera.SetActive(true);
         SceneManager.UnloadSceneAsync(1);
         ChangeFirstButton(mMainMenuFirstSelected);
     }
@@ -168,5 +207,23 @@ public class MenuManager : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(ButtonToActivate);
+    }
+    private IEnumerator LoadScene(PlayerData data)
+    {
+
+        AsyncOperation asyncLoadLevel = SceneManager.LoadSceneAsync(data.level, LoadSceneMode.Additive);
+
+        while (!asyncLoadLevel.isDone)
+            yield return null;
+        yield return new WaitForEndOfFrame();
+        mCurrentLevel = data.level;
+
+        Vector3 position;
+        position.x = data.position[0];
+        position.y = data.position[1];
+        position.z = data.position[2];
+        PlayerControl.sPlayer.transform.position = position;
+
+        Time.timeScale = 1.0f;
     }
 }
