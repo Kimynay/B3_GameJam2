@@ -24,10 +24,12 @@ public class LightDetection : MonoBehaviour
                 if(mThisPoliceIA.GetComponent<PoliceCarIA>() != null)
                 {
                     mThisPoliceIA.GetComponent<PoliceCarIA>().mHaveDetectedThePlayer = true;
+                    PlayerControl.sPlayer.mHasBeenArrested = true;
                 }
                 if (mThisPoliceIA.GetComponent<PoliceManIA>() != null)
                 {
                     mThisPoliceIA.GetComponent<PoliceManIA>().mHaveDetectedThePlayer = true;
+                    PlayerControl.sPlayer.mHasBeenArrested = true;
                 }
             }
         }
