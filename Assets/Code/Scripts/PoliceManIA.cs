@@ -6,6 +6,7 @@ public class PoliceManIA : MonoBehaviour
 {
     public Transform[] mPatrolPoints;
     private Vector3[] mPatrolPointsPos;
+    private Animator mAnimator;
 
     public float mPoliceManSpeed = 3.0f;
     public float mPoliceManRunSpeed = 5.0f;
@@ -20,6 +21,7 @@ public class PoliceManIA : MonoBehaviour
     private bool mGameFinished = false;
     void Start()
     {
+        mAnimator = GetComponent<Animator>();
         mPatrolPointsPos = new Vector3[mPatrolPoints.Length];
         for (int i = 0; i < mPatrolPoints.Length; i++)
         {
@@ -48,6 +50,7 @@ public class PoliceManIA : MonoBehaviour
         Vector3 direction = mPatrolPointsPos[index] - transform.position;
         transform.rotation = Quaternion.LookRotation(direction.normalized);
         transform.position += direction.normalized * Time.deltaTime * mPoliceManSpeed;
+        mAnimator.SetBool("walk", true);
         if (direction.magnitude < mDistanceToStopAtPoint)
         {
             transform.position = mPatrolPointsPos[index];
@@ -58,6 +61,7 @@ public class PoliceManIA : MonoBehaviour
     }
     void StayThereSomeTime()
     {
+        mAnimator.SetBool("walk", false);
         StartCoroutine(WaitThereXSecond(mStayTimeduration));
     }
 
@@ -73,7 +77,8 @@ public class PoliceManIA : MonoBehaviour
     {
         Vector3 direction = PlayerControl.sPlayer.transform.position - transform.position;
         transform.position += direction.normalized * Time.deltaTime * mPoliceManRunSpeed;
-        if(direction.magnitude < mDistanceToArrestThePlayer)
+        mAnimator.SetBool("run", true);
+        if (direction.magnitude < mDistanceToArrestThePlayer)
         {
             PlayerControl.sPlayer.mHasBeenArrested = true;
             mGameFinished = true;
