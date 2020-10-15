@@ -5,10 +5,8 @@ ShaderImporter:
   defaultTextures:
   - _Foliage_Normal: {fileID: 2800000, guid: 060c3924bc5e95448b5b156708223d6e, type: 3}
   - _Foliage_Albedo: {fileID: 2800000, guid: 31bbfad8722befb4d8c5c9ba37d6b522, type: 3}
-  - _Foliage_Roughness: {fileID: 2800000, guid: 6bd7966bb1898114c8379cd135d5afb6,
-      type: 3}
-  - _Foliage_AO: {fileID: 2800000, guid: f79027a60ec23014dadb0bff15eb9168, type: 3}
   - _Foliage_Opacity: {fileID: 2800000, guid: 2622ebb8c0d608149ac589d15d02f3bb, type: 3}
+  - _Foliage_AO: {fileID: 2800000, guid: f79027a60ec23014dadb0bff15eb9168, type: 3}
   nonModifiableTextures: []
   userData: 
   assetBundleName: 

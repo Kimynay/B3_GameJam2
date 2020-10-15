@@ -38,10 +38,12 @@ public class PlayerControl : MonoBehaviour
 
     public bool mThisLevelFinishSetup;
 
+    public bool mEndFailMenuSet;
+
 
     void Start()
     {
-        
+
         mBushList = new List<GameObject>();
         if (sPlayer == null)
         {
@@ -75,7 +77,12 @@ public class PlayerControl : MonoBehaviour
             }
             else
             {
-                Debug.Log("GAME OVER !");
+                if(!mEndFailMenuSet)
+                {
+                    mEndFailMenuSet = true;
+                    MenuManager.sMenuManager.EndFail();
+                    //Debug.Log("GAME OVER !");
+                }
             }
             if (mBushList.Count > 0 && mIsCrouch)
             {
