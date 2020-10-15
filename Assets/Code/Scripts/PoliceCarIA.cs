@@ -48,7 +48,7 @@ public class PoliceCarIA : MonoBehaviour
                 //PlaySound !!!
                 for (int i = 0; i < mGiroPhares.Length; i++)
                 {
-                    mGiroPhares[i].GetComponent<Light>().intensity = 1.0f;
+                    mGiroPhares[i].GetComponent<Light>().intensity = 5.0f;
                 }
             }
             for (int i = 0; i < mGiroPhares.Length; i++)
