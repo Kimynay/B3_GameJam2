@@ -26,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2843114483544515562}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.13, y: 1.8, z: 3.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -51,14 +51,18 @@ MonoBehaviour:
   mHorizontalRotationSpeed: 1.5
   mVerticalRotationSpeed: 1.5
   mMaxVerticalRotation: 60
-  mCrouchMovementHeight: 0.8
+  mCrouchHeight: 0.9
   mCrouchYSpeed: 3
   mRatioCrounchMovementSpeed: 0.5
   mPumpkinMask:
     serializedVersion: 2
     m_Bits: 256
+  mCameraBaseHeight: 1.6
   mIsCrouch: 0
+  mHaveDetectedThePlayer: 0
+  mIsHide: 0
   mHaveBeenSeen: 0
+  mHasBeenArrested: 0
 --- !u!136 &2843114483544515566
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -72,7 +76,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: -0.8, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &2843114483544515567
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -100,6 +104,7 @@ GameObject:
   - component: {fileID: 2843114484646048922}
   - component: {fileID: 2843114484646048923}
   - component: {fileID: 2843114484646048900}
+  - component: {fileID: 2843114484062306125}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -115,7 +120,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2843114484646048901}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2843114483544515560}
@@ -172,3 +177,17 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2843114484646048901}
   m_Enabled: 1
+--- !u!114 &2843114484062306125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2843114484646048901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ab14cb23cd03f43b8fda612d7d044a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mPostProcessMaterial: {fileID: 2100000, guid: 964ec0fc12eb61e49821644bf08e1823,
+    type: 2}

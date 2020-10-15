@@ -1,7 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
+    public static PlayerControl sPlayer;
+
     public Camera mCamera;
     public float mNormalSpeed = 4;
     public float mHorizontalRotationSpeed = 1.5f;
@@ -23,27 +27,65 @@ public class PlayerControl : MonoBehaviour
     private bool mHaveSeenPumpkin;
     private Pumpkin mLastPumpkinSeen;
     private bool mLastPumpkinReset;
+    private List<GameObject> mBushList;
+    private Rigidbody mRigidbody;
 
     public bool mHaveDetectedThePlayer = false;
 
     public bool mIsHide = false;
     public bool mHaveBeenSeen = false;
     public bool mHasBeenArrested = false;
+
+    public bool mThisLevelFinishSetup;
+
+
     void Start()
     {
         
+        mBushList = new List<GameObject>();
+        if (sPlayer == null)
+        {
+            sPlayer = this;
+            mRigidbody = sPlayer.GetComponent<Rigidbody>();
+
+
+        }
+
     }
 
     void Update()
     {
-        if(mHaveBeenSeen)
+        if(MenuManager.sInMainMenu)
         {
-            Debug.Log("GAME OVER !");
+            mRigidbody.useGravity = false;
         }
-        Move();
-        Crouch();
-        InteractWithPumpkin();
+        else
+        {
+            if(!mThisLevelFinishSetup)
+            {
+                mThisLevelFinishSetup = true;
 
+                mRigidbody.useGravity = true;
+            }
+            if (!mHasBeenArrested)
+            {
+                Move();
+                Crouch();
+                InteractWithPumpkin();
+            }
+            else
+            {
+                Debug.Log("GAME OVER !");
+            }
+            if (mBushList.Count > 0 && mIsCrouch)
+            {
+                mIsHide = true;
+            }
+            else
+            {
+                mIsHide = false;
+            }
+        }
     }
 
     void Move()
@@ -141,6 +183,20 @@ public class PlayerControl : MonoBehaviour
             mLastPumpkinReset = true;
             mHaveSeenPumpkin = false;
             mLastPumpkinSeen.SetUnSeen();
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Bush"))
+        {
+            mBushList.Add(other.gameObject);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Bush"))
+        {
+            mBushList.Remove(other.gameObject);
         }
     }
 }
