@@ -5701,6 +5701,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player2.0
       objectReference: {fileID: 0}
+    - target: {fileID: 3693194906224031772, guid: 434f321ae0ac5fb4184bfad4c75b45cb,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693194906224031772, guid: 434f321ae0ac5fb4184bfad4c75b45cb,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4038336470597214880, guid: 434f321ae0ac5fb4184bfad4c75b45cb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5754,11 +5764,6 @@ PrefabInstance:
     - target: {fileID: 4038336470597214880, guid: 434f321ae0ac5fb4184bfad4c75b45cb,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576137582425851213, guid: 434f321ae0ac5fb4184bfad4c75b45cb,
-        type: 3}
-      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
