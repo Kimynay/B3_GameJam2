@@ -153,12 +153,27 @@ public class MenuManager : MonoBehaviour
     {
         if (mCurrentLevel != 0 && SceneManager.GetSceneByBuildIndex(mCurrentLevel).isLoaded)
             SceneManager.UnloadSceneAsync(mCurrentLevel);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Additive);
         PlayerControl.sPlayer.mThisLevelFinishSetup = false;
         mLoadingScreen.SetActive(false);
         sInMainMenu = false;
-        Time.timeScale = 1.0f;
         mCurrentLevel += 1;
+        SceneManager.LoadScene(mCurrentLevel, LoadSceneMode.Additive);
+        PlayerControl.sPlayer.transform.position = mStartLevelTransform[mCurrentLevel - 1].position;
+        PlayerControl.sPlayer.transform.rotation = mStartLevelTransform[mCurrentLevel - 1].rotation;
+        Time.timeScale = 1.0f;
+    }
+    public void RestartLevel()
+    {
+        if (mCurrentLevel != 0 && SceneManager.GetSceneByBuildIndex(mCurrentLevel).isLoaded)
+            SceneManager.UnloadSceneAsync(mCurrentLevel);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Additive);
+        PlayerControl.sPlayer.mThisLevelFinishSetup = false;
+        PlayerControl.sPlayer.mHasBeenArrested = false;
+        PlayerControl.sPlayer.mEndFailMenuSet = false;
+
+        mLoadingScreen.SetActive(false);
+        sInMainMenu = false;
+        Time.timeScale = 1.0f;
         PlayerControl.sPlayer.transform.position = mStartLevelTransform[mCurrentLevel - 1].position;
         PlayerControl.sPlayer.transform.rotation = mStartLevelTransform[mCurrentLevel - 1].rotation;
     }
