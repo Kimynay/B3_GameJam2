@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
 
     private bool mAllPumpkinPoisonned;
     private bool mFinishLevelSet = false;
+    private float mTimeToWaitAtEnd = 2.0f;
     void Start()
     {
         mFinishLevelSet = false;
@@ -22,7 +23,7 @@ public class LevelManager : MonoBehaviour
         if(!mFinishLevelSet && VerifyPumpkins())
         {
             mFinishLevelSet = true;
-            MenuManager.sMenuManager.EndWin();
+            StartCoroutine(WaitTwosecond(mTimeToWaitAtEnd));
         }
     }
     public bool VerifyPumpkins()
@@ -43,5 +44,10 @@ public class LevelManager : MonoBehaviour
             return true;
         else
             return false;
+    }
+    IEnumerator WaitTwosecond(float secondToWait)
+    {
+        yield return new WaitForSeconds(secondToWait);
+        MenuManager.sMenuManager.EndWin();
     }
 }

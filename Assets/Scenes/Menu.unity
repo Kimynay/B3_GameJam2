@@ -2437,8 +2437,7 @@ MonoBehaviour:
   mEndWin: 0
   mCurrentLevel: 0
   mStartLevelTransform:
-  - {fileID: 9142586796260762104, guid: df97eb0d5f28cb44e8d5973e37dd462c, type: 3}
-  - {fileID: 9142586796260762104, guid: df97eb0d5f28cb44e8d5973e37dd462c, type: 3}
+  - {fileID: 6032735188327269959, guid: 94f5949101499e54b93edfaa0bd5200d, type: 3}
 --- !u!1 &509568568
 GameObject:
   m_ObjectHideFlags: 0

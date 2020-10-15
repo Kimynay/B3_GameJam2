@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Pumpkin : MonoBehaviour
 {
-    private Color mPumpkinBaseColor;
-    private MeshRenderer mMeshRenderer;
+    public Light mLight;
+    public Light mLight2;
+    public ParticleSystem mParticleSystem;
+    public MeshRenderer mMeshRenderer;
     public bool mSeen = false;
     public bool mInfected = false;
+    private ParticleSystem.MainModule mainModule;
     void OnEnable()
     {
-        mMeshRenderer = transform.GetComponent<MeshRenderer>();
-        mPumpkinBaseColor = mMeshRenderer.material.color;
+        mainModule = mParticleSystem.main;
     }
 
     void Update()
@@ -20,15 +22,18 @@ public class Pumpkin : MonoBehaviour
     }
     public void SetSeen()
     {
-        mMeshRenderer.material.color = Color.yellow;
+        mMeshRenderer.material.SetFloat("_Seen", 1.0f);
     }
     public void SetInfected()
     {
         mInfected = true;
-        mMeshRenderer.material.color = Color.green;
+        mLight.color = Color.green;
+        mLight2.color = Color.green;
+        mainModule.startColor = Color.green;
+        mMeshRenderer.material.SetFloat("_Seen", 0.0f);
     }
     public void SetUnSeen()
     {
-        mMeshRenderer.material.color = mPumpkinBaseColor;
+        mMeshRenderer.material.SetFloat("_Seen", 0.0f);
     }
 }
